@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tchaikovsky infinite radio</title>
+    <!-- <link rel="shortcut icon" href="tch-01.svg" type="image/svg"> -->
+    <link rel="stylesheet" href="tchaikovsky.css">
+</head>
+
+<body>
+    <img src="tch-01.svg" alt="" id="shape">
+    <div class="images">
+        <img src="Tchaikovsky.jpeg" alt="" id="photo">
+        <img src="tch-01.svg" alt="" id="handwritten">
+    </div>
+    <audio>
+        <source src="Tchaikovsky,_Concerto_No.1_in_B-flat_minor_Op.23,_II._Andantino.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    <script>
+        let link = document.createElement('link');
+        link.rel = 'icon';
+        document.head.appendChild(link);
+        link.href = 'tch-01.svg';
+        let audio = document.getElementsByTagName("audio")[0]
+        let handwritten = document.getElementById("handwritten")
+        let photo = document.getElementById("photo")
+        let audios = [
+            "Tchaikovsky,_Concerto_No.1_in_B-flat_minor_Op.23,_I._Allegro.mp3",
+            "Tchaikovsky,_Concerto_No.1_in_B-flat_minor_Op.23,_II._Andantino.mp3",
+            "Tchaikovsky,_Concerto_No.1_in_B-flat_minor_Op.23,_III._Allegro.mp3",
+        ]
+        let counter = Math.floor(Math.random() * audios.length)
+        audio.children[0].src = audios[counter]
+        audio.load();
+        let canPlay = true
+        console.log(audio.children[0].src);
+        let time = 0
+
+        document.body.onclick = () => {
+            console.log(12);
+            if (canPlay) {
+                audio.currentTime = time
+                audio.play()
+                photo.style.opacity = 1
+            } else {
+                time = audio.currentTime
+                audio.pause()
+                photo.style.opacity = 0.3
+            }
+            canPlay = !canPlay
+        }
+
+        audio.addEventListener("ended", () => {
+            counter++
+            audio.children[0].src = audios[counter % audios.length]
+            audio.load();
+            audio.play()
+        });
+    </script>
+</body>
+
+</html>
